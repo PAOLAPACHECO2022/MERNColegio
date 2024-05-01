@@ -8,6 +8,7 @@ const initialState = {
   grades: [],
   courses: [],
   scores: [],
+  activities: []
 };
 
 export const authSlice = createSlice({
@@ -39,10 +40,13 @@ export const authSlice = createSlice({
     },
     setScores: (state, action) => {
       state.scores = action.payload.scores;
+    },
+    setActivities: (state, action) => {
+      state.activities = action.payload.activities;
     }
   },
 });
 
-export const { setLogin, setLogout, setTeachers,setContacto,setStudents, setGrades, setCourses, setScores } =
+export const { setLogin, setLogout, setTeachers,setContacto,setStudents, setGrades, setCourses, setScores,setActivities } =
   authSlice.actions;
 export default authSlice.reducer;

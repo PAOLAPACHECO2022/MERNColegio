@@ -15,6 +15,7 @@ import gradeRoutes from "./routes/grades.js";
 import studentRoutes from "./routes/students.js";
 import courseRoutes from "./routes/courses.js";
 import scoreRoutes from "./routes/scores.js";
+import activityRoutes from "./routes/activities.js";
 import attendanceRoutes from "./routes/attendance.js";
 import performancecRoutes from "./routes/performancec.js";
 import {
@@ -100,6 +101,7 @@ app.use("/grades", gradeRoutes);
 app.use("/students", studentRoutes);
 app.use("/courses", courseRoutes);
 app.use("/scores", scoreRoutes);
+app.use("/activities", activityRoutes);
 app.use("/attendance", attendanceRoutes);
 app.use("/performancec", performancecRoutes);
 

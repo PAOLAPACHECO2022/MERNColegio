@@ -62,7 +62,7 @@ const FormEditStudent = ({studentData, setStudentData, gradeId}) => {
             <div className="grid gap-6 mb-6 md:grid-cols-2">
               <div>
                 <label
-                  for="first_name"
+                  htmlFor="first_name"
                   className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                 >
                   First name
@@ -79,7 +79,7 @@ const FormEditStudent = ({studentData, setStudentData, gradeId}) => {
               </div>
               <div>
                 <label
-                  for="last_name"
+                  htmlFor="last_name"
                   className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                 >
                   Last name
@@ -96,7 +96,7 @@ const FormEditStudent = ({studentData, setStudentData, gradeId}) => {
               </div>
               <div>
                 <label
-                  for="phone"
+                  htmlFor="phone"
                   className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                 >
                   DNI
@@ -113,7 +113,7 @@ const FormEditStudent = ({studentData, setStudentData, gradeId}) => {
               </div>
               <div>
                 <label
-                  for="website"
+                  htmlFor="website"
                   className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                 >
                   Phone
@@ -122,7 +122,7 @@ const FormEditStudent = ({studentData, setStudentData, gradeId}) => {
                   type="text"
                   id="website"
                   className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                  placeholder="flowbite.com"
+                  placeholder="Phone"
                   required
                   value={phone}
                   onChange={(e) => setPhone(e.target.value)}
@@ -130,7 +130,7 @@ const FormEditStudent = ({studentData, setStudentData, gradeId}) => {
               </div>
               <div>
                 <label
-                  for=""
+                  htmlFor=""
                   className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                 >
                   Fecha de Nacimiento
@@ -138,7 +138,7 @@ const FormEditStudent = ({studentData, setStudentData, gradeId}) => {
                 <input
                   type="date"
                   className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                  placeholder="123-45-678"
+                  placeholder="AAAA-MM-DD"
                   required
                   value={fechaNacimiento}
                   onChange={(e) => setFechaNacimiento(e.target.value)}
@@ -146,7 +146,7 @@ const FormEditStudent = ({studentData, setStudentData, gradeId}) => {
               </div>
               <div>
                 <label
-                  for="website"
+                  htmlFor="website"
                   className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                 >
                   Nacionality
@@ -154,7 +154,7 @@ const FormEditStudent = ({studentData, setStudentData, gradeId}) => {
                 <input
                   type="text"
                   className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                  placeholder="flowbite.com"
+                  placeholder="Nacionality"
                   required
                   value={nacionality}
                   onChange={(e) => setNacionality(e.target.value)}
@@ -165,7 +165,7 @@ const FormEditStudent = ({studentData, setStudentData, gradeId}) => {
                 
             <div className="mb-6">
               <label
-                for="password"
+                htmlFor="password"
                 className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
               >
                 Password

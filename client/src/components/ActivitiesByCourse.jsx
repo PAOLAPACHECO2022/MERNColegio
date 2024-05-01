@@ -1,15 +1,15 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setScores } from "state";
+import { setActivities } from "state";
 import ReactPaginate from "react-paginate";
 import Sidebar from "./Sidebar";
 import Aside from "./Aside";
 import { useNavigate, useParams } from "react-router-dom";
 import '../index.css'; 
 
-const ScoresByCourse = () => {
+const ActivitiesByCourse = () => {
   const dispatch = useDispatch();
-  const scores = useSelector((state) => state.scores);
+  const activities = useSelector((state) => state.activities);
   const token = useSelector((state) => state.token);
   const [currentPage, setCurrentPage] = useState(0);
   const navigate = useNavigate();
@@ -17,33 +17,33 @@ const ScoresByCourse = () => {
 
   const [searchTerm, setSearchTerm] = useState(""); // Para el término de búsqueda
 
-  const getScores = async () => {
+  const getActivities = async () => {
     const response = await fetch(
-      `http://localhost:3003/scores/${courseId}/course`,
+      `http://localhost:3003/activities/${courseId}/course`,
       {
         method: "GET",
         headers: { Authorization: `Bearer ${token}` },
       }
     );
     const data = await response.json();
-    dispatch(setScores({ scores: data }));
+    dispatch(setActivities({ activities: data }));
   };
 
   useEffect(() => {
-    getScores();
+    getActivities();
   }, [courseId]); // eslint-disable-line
 
   const PER_PAGE = 10;
   const offset = currentPage * PER_PAGE;
-  const pageCount = Math.ceil(scores.length / PER_PAGE);
+  const pageCount = Math.ceil(activities.length / PER_PAGE);
 
   const handlePageClick = ({ selected: selectedPage }) => {
     setCurrentPage(selectedPage);
   };
 
-  const handleDelete = async (scoreId) => {
+  const handleDelete = async (activityId) => {
     const response = await fetch(
-      `http://localhost:3003/scores/${scoreId}/delete`,
+      `http://localhost:3003/activities/${activityId}/delete`,
       {
         method: "DELETE",
         headers: {
@@ -53,37 +53,43 @@ const ScoresByCourse = () => {
       }
     );
     console.log(response);
-    console.log("Score deleted");
-    getScores();
+    console.log("Activity deleted");
+    getActivities();
   };
 
-  // Filtrar los scores por "studentName" usando el término de búsqueda
-  const filteredScores = scores.filter((score) =>
-    score.studentName.toLowerCase().includes(searchTerm.toLowerCase())
+  // Filtrar los Activities por "studentName" usando el término de búsqueda
+  const filteredActivities = activities.filter((activity) =>
+  activity.studentName.toLowerCase().includes(searchTerm.toLowerCase())
   );
+  function dateFormated(date) {
+    let dateObj = new Date(date);
+    let formattedDate = dateObj.toISOString().slice(0, 10);
+    return formattedDate;
+  }
 
-  const scoresToDisplay = filteredScores
+
+  const activitiesToDisplay = filteredActivities
     .slice(offset, offset + PER_PAGE)
-    .map((score) => (
-      <tr key={score._id}>
-        <td className="border px-4 py-2">{score.studentName}</td>
-        <td className="border px-4 py-2">{score.courseName}</td>
-        <td className="border px-4 py-2">{score.area}</td>
-        <td className="border px-4 py-2">{score.score1}</td>
-        <td className="border px-4 py-2">{score.score2}</td>
-        <td className="border px-4 py-2">{score.score3}</td>
-        <td className="border px-4 py-2">{score.score4}</td>
-        <td className="border px-4 py-2">{score.promedio}</td>
+    .map((activity) => (
+      <tr key={activity._id}>
+        <td className="border px-4 py-2">{activity.studentName}</td>
+        <td className="border px-4 py-2">{activity.courseName}</td>
+        <td className="border px-4 py-2">{activity.area}</td>
+        <td className="border px-4 py-2">{activity.indicator}</td>
+        <td className="border px-4 py-2">{activity.actity}</td>
+        <td className="border px-4 py-2">{activity.statea}</td>
+        <td className="border px-4 py-2">{dateFormated(activity.date)}</td>
+
         <td className="border px-4 py-2">
           <button
             className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-2"
-            onClick={() => navigate(`/editScore/${courseId}/${gradeId}/${score._id}`)}
+            onClick={() => navigate(`/editActivity/${courseId}/${gradeId}/${activity._id}`)}
           >
             Edit
           </button>
           <button
             className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
-            onClick={() => handleDelete(score._id)}
+            onClick={() => handleDelete(activity._id)}
           >
             Delete
           </button>
@@ -100,7 +106,7 @@ const ScoresByCourse = () => {
           <div className="p-4 sm:ml-64">
             <div className="bg-white p-4 border-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700 mt-14">
               <div className="flex flex-row justify-between mb-4">
-                <h1 className="text-3xl font-bold mb-4">Scores</h1>
+                <h1 className="text-3xl font-bold mb-4">Activities</h1>
                 <input
                   type="text"
                   placeholder="Search by student name..."
@@ -110,9 +116,9 @@ const ScoresByCourse = () => {
                 />
                 <button
                   className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mr-2"
-                  onClick={() => navigate(`/newScore/${courseId}/${gradeId}`)}
+                  onClick={() => navigate(`/newActivity/${courseId}/${gradeId}`)}
                 >
-                  New Score
+                  New Activity
                 </button>
               </div>
               <table className="table-auto w-full text-left">
@@ -121,15 +127,14 @@ const ScoresByCourse = () => {
                     <th className="px-4 py-2">Student Name</th>
                     <th className="px-4 py-2">Course Name</th>
                     <th className="px-4 py-2">Area</th>
-                    <th className="px-4 py-2">Score 1</th>
-                    <th className="px-4 py-2">Score 2</th>
-                    <th className="px-4 py-2">Score 3</th>
-                    <th class="px-4 py-2">Score 4</th>
-                    <th className="px-4 py-2">Promedio</th>
+                    <th className="px-4 py-2">Indicator</th>
+                    <th className="px-4 py-2">Activity</th>
+                    <th className="px-4 py-2">State</th>
+                    <th class="px-4 py-2">Date</th>
                     <th className="px-4 py-2">Actions</th>
                   </tr>
                 </thead>
-                <tbody>{scoresToDisplay}</tbody>
+                <tbody>{activitiesToDisplay}</tbody>
               </table>
               <div className="flex justify-center mt-4">
                 <ReactPaginate
@@ -152,4 +157,4 @@ const ScoresByCourse = () => {
   );
 };
 
-export default ScoresByCourse;
+export default ActivitiesByCourse;

@@ -1,17 +1,22 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import '../index.css'; 
 
-const FormEditScore = ({ scoreData, setScoreData, courseId, gradeId }) => {
+const FormEditActivity = ({ activityData, setActivityData, courseId, gradeId }) => {
   const navigate = useNavigate();
+
+
+
   const token = useSelector((state) => state.token);
-  const [area, setArea] = useState(scoreData.area);
-  const [score1, setScore1] = useState(scoreData.score1);
-  const [score2, setScore2] = useState(scoreData.score2);
-  const [score3, setScore3] = useState(scoreData.score3);
-  const [score4, setScore4] = useState(scoreData.score4);
-  const [promedio, setPromedio] = useState(scoreData.promedio);
+  const [area, setArea] = useState(activityData.area);
+  const [indicator, setIndicator] = useState(activityData.indicator);
+  const [actity, setActity] = useState(activityData.actity);
+  const [statea, setStatea] = useState(activityData.statea);
+  const [date, setDate] = useState(activityData.date);
+
+
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -19,7 +24,7 @@ const FormEditScore = ({ scoreData, setScoreData, courseId, gradeId }) => {
     formData.append("area", area);
 
     const response = await fetch(
-      `http://localhost:3003/scores/${scoreData._id}/edit`,
+      `http://localhost:3003/activities/${activityData._id}/edit`,
       {
         method: "PATCH",
         headers: {
@@ -28,38 +33,30 @@ const FormEditScore = ({ scoreData, setScoreData, courseId, gradeId }) => {
         },
         body: JSON.stringify({
           area: area,
-          score1: score1,
-          score2: score2,
-          score3: score3,
-          score4: score4,
-          promedio: promedio,
-          studentId: scoreData.studentId,
+          indicator: indicator,
+          actity: actity,
+          statea: statea,
+          date: date,
+          studentId: activityData.studentId,
           courseId: courseId,
-          period: scoreData.period,
+          period: activityData.period,
         }),
       }
     );
 
-    const updatedScore = await response.json();
-    setScoreData(updatedScore);
-    console.log("Score updated");
-    navigate(`/scoresByCourse/${courseId}/${gradeId}`);
+    const updatedActivity = await response.json();
+    setActivityData(updatedActivity);
+    console.log("Activity updated");
+    navigate(`/activitiesByCourse/${courseId}/${gradeId}`);
   };
 
-  function calculatePromedio(a, b, c, d) {
-    return (a + b + c + d) / 4;
-  }
-
-  useEffect(() => {
-    setPromedio(calculatePromedio(score1, score2, score3, score4));
-  }, [score1, score2, score3, score4]);
 
   return (
   <div className="fondoy fondoy-wrap p-5">
     <div className="p-4 sm:ml-64">
       <div className="fondox p-4 border-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700 mt-14">
         <div className="flex flex-row justify-between mb-4">
-          <h1 className="text-3xl font-bold mb-4">Edit Score</h1>
+          <h1 className="text-3xl font-bold mb-4">Edit Activity</h1>
         </div>
         <form onSubmit={handleSubmit}>
           <div className="grid gap-6 mb-6 md:grid-cols-2">
@@ -70,82 +67,12 @@ const FormEditScore = ({ scoreData, setScoreData, courseId, gradeId }) => {
               <input
                 type="text"
                 readOnly
-                value={scoreData.studentName}
+                value={activityData.studentName}
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               />
             </div>
+
             <div>
-              <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                Score 1
-              </label>
-              <input
-                type="number"
-                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                placeholder="Score number"
-                required
-                value={score1}
-                onChange={(e) => setScore1(parseInt(e.target.value))}
-              />
-            </div>
-          </div>
-          <div className="grid gap-6 mb-6 md:grid-cols-2">
-            <div>
-              <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                Score 2
-              </label>
-              <input
-                type="number"
-                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                placeholder="Score number"
-                required
-                value={score2}
-                onChange={(e) => setScore2(parseInt(e.target.value))}
-              />
-            </div>
-            <div>
-              <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                Score 3
-              </label>
-              <input
-                type="number"
-                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                placeholder="Score number"
-                required
-                value={score3}
-                onChange={(e) => setScore3(parseInt(e.target.value))}
-              />
-            </div>
-          </div>
-          <div className="grid gap-6 mb-6 md:grid-cols-2">
-            <div>
-              <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                Score 4
-              </label>
-              <input
-                type="number"
-                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                placeholder="Score number"
-                required
-                value={score4}
-                onChange={(e) => setScore4(parseInt(e.target.value))}
-              />
-            </div>
-            <div>
-              <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                Promedio
-              </label>
-              <input
-                type="number"
-                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                placeholder="Promedio"
-                required
-                value={promedio}
-                readOnly
-              />
-            </div>
-          </div>
-          <div className="grid gap-6 mb-6 md:grid-cols-2">
-          <div>
                 <label
                   for="website"
                   className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
@@ -156,12 +83,79 @@ const FormEditScore = ({ scoreData, setScoreData, courseId, gradeId }) => {
                   type="text"
                   id="website"
                   className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                  placeholder="Area"
+                  placeholder="flowbite.com"
                   required
                   value={area}
                   onChange={(e) => setArea(e.target.value)}
                 />
               </div>
+      
+          </div>
+          <div className="grid gap-6 mb-6 md:grid-cols-2">
+
+          <div>
+              <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+              Indicator
+              </label>
+              <textarea
+                type="text"
+                rows={2} 
+                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                placeholder="Describes the indicator"
+                required
+                value={indicator}
+                onChange={(e) => setIndicator(e.target.value)}
+              />
+            </div>
+
+            <div>
+              <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+              Activity
+              </label>
+              <textarea
+  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+  placeholder="Describe the Activity"
+  required
+  value={actity}
+  onChange={(e) => setActity(e.target.value)}
+  rows={2} // Define el número de filas inicial
+/>
+
+            </div>
+            
+          </div>
+          <div className="grid gap-6 mb-6 md:grid-cols-2">
+            
+            <div>
+              <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+              Date
+              </label>
+              <input
+                type="date"
+                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                placeholder="Date the Activity"
+                required
+                value={date}
+                onChange={(e) => setDate(e.target.value)}
+              />
+            </div>
+            <div>
+              <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+              State
+              </label>
+              <input
+                type="text"
+                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                placeholder="Activity status"
+                required
+                value={statea}
+                onChange={(e) => setStatea(e.target.value)}
+              />
+            </div>
+     
+          </div>
+          <div className="grid gap-6 mb-6 md:grid-cols-2">
+  
           
           </div>
           <button
@@ -177,4 +171,4 @@ const FormEditScore = ({ scoreData, setScoreData, courseId, gradeId }) => {
   );
 };
 
-export default FormEditScore;
+export default FormEditActivity;

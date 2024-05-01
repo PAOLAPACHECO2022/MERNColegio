@@ -7,6 +7,8 @@
     background: rgba(230, 124, 124, 0.8);
     color: rgb(2, 2, 2);
    align-content: center;
+    
+    
 }
 
 #card_cuadro{
@@ -74,6 +76,12 @@ textarea {
     right: 0;
     bottom: 0;
     z-index: -1; /* Mantén el fondo detrás del contenido */
+   
+}
+tr, table {
+    position: flex;
+    /* Mantén el fondo detrás del contenido */
+    
    
 }
 

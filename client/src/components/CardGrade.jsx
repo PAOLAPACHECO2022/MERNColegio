@@ -9,6 +9,10 @@ const CardGrade = ({ gradeId, gradeName, level, action }) => {
       navigate(`/studentsByGrade/${gradeId}`);
     } else if (action === "score") {
       navigate(`/coursesByGradeScore/${gradeId}`);
+
+    } else if (action === "activity") {
+      navigate(`/coursesByGradeActivity/${gradeId}`);
+      
     } else if (action === "attendance") {
       navigate(`/studentsByGradeAttendance/${gradeId}`);
 

@@ -1,9 +1,11 @@
 import Student from "../models/Student.js";
 import Grade from "../models/Grade.js";
 import Score from "../models/Score.js";
+import Activity from "../models/Activity.js";
 import fs from "fs-extra";
 import bcrypt from "bcrypt";
 import Attendance from "../models/Attendance.js";
+
 
 // READ
 export const getStudentsByGrade = async (req, res) => {
@@ -73,10 +75,15 @@ export const editStudent = async (req, res) => {
         { studentId: studentId },
         { studentName: `${firstName} ${lastName}` }
       );
+      await Activity.updateMany(
+        { studentId: studentId },
+        { studentName: `${firstName} ${lastName}` }
+      );
       await Attendance.updateMany(
         { studentId: studentId },
         { studentFirstName: firstName, studentLastName: lastName }
       );
+   
       res.status(200).json(updatedStudent);
     } else {
       const salt = await bcrypt.genSalt();
@@ -100,10 +107,15 @@ export const editStudent = async (req, res) => {
         { studentId: studentId },
         { studentName: `${firstName} ${lastName}` }
       );
+      await Activity.updateMany(
+        { studentId: studentId },
+        { studentName: `${firstName} ${lastName}` }
+      );
       await Attendance.updateMany(
         { studentId: studentId },
         { studentFirstName: firstName, studentLastName: lastName }
       );
+   
       res.status(200).json(updatedStudent);
     }
   } catch (error) {
